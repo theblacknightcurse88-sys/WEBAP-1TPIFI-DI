@@ -52,7 +52,7 @@ function decrease() {
 }
 
 */
-
+/*
 //EXERCISE 2 - SUM TWO VALUES
 $(addBtn);
 function addBtn() {
@@ -63,4 +63,48 @@ function sumValue() {
     let input2 = parseInt($("#numB:nth-of-type(2)").val());
     let sum = input1 + input2;
     $("#Result").html(sum);
+}
+*/
+
+$(start);
+
+function start() {
+    /*
+    ADD html to the DOM tree:
+        <label>Please type A:</label>
+        <input id="NumberA"/>
+        <label>Please type B:</label>
+        <input id="NumberB"/>
+        <button id="Add">Add</button>
+        <div id="Result"></div>
+    */
+   //   <label>Please type A:</label>
+   let newLabelElement = $("<label>");
+   newLabelElement.html("Please type A:");
+   $("body").append(newLabelElement);
+   let newInput = $("<input>");
+   newInput.attr("type", "number");
+   $("body").append(newInput);
+
+    let newBreakElement = $("<br>");
+    $("body").append(newBreakElement);
+
+    // <label>Please type B:</label>
+    let newLabelElementB = $("<label>");
+    newLabelElementB.html("Please type B:");
+    $("body").append(newLabelElementB);
+    let newInputB = $("<input>");
+    newInputB.attr("number", "NumberB");
+    $("body").append(newInputB);
+
+    let newBreakElement2 = $("<br>");
+    let newBreakElement3 = $("</br>");
+    $("body").append(newBreakElement2);
+    $("body").append(newBreakElement3);
+    
+    // <button id="Add">Add</button>
+    let newButton = $("<button>");
+    newButton.attr("id", "Add");
+    newButton.html("Add");
+    $("body").append(newButton)
 }
