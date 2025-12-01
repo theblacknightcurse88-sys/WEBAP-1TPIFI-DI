@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Grid Creator</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 16px; }
+        label { display: inline-block; width: 90px; }
+        input[type="number"] { width: 80px; margin-right: 12px; }
+        table { border-collapse: collapse; margin-top: 12px; }
+        td { border: 1px solid #444; padding: 10px 14px; text-align: center; cursor: pointer; user-select: none; }
+        .controls { margin-bottom: 12px; }
+        .row { margin-bottom: 6px; }
+        button { margin-right: 8px; }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <div class="row">
+            <label for="rows">Rows</label>
+            <input id="rows" type="number" min="1" step="1" />
+            <label for="cols">Columns</label>
+            <input id="cols" type="number" min="1" step="1" />
+        </div>
+        <div class="row">
+            <label for="targetX">TargetX</label>
+            <input id="targetX" type="number" min="1" step="1" />
+            <label for="targetY">TargetY</label>
+            <input id="targetY" type="number" min="1" step="1" />
+        </div>
+        <div class="row">
+            <button id="createBtn">Create Grid</button>
+            <button id="resetBtn">Reset</button>
+        </div>
+        <div style="font-size:12px;color:#555">
+            Note: TargetX = column number (1..Columns), TargetY = row number (1..Rows)
+        </div>
+    </div>
+
+    <div id="gridContainer"></div>
+
+    <script>
+        const rowsInput = document.getElementById('rows');
+        const colsInput = document.getElementById('cols');
+        const txInput = document.getElementById('targetX');
+        const tyInput = document.getElementById('targetY');
+        const createBtn = document.getElementById('createBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const container = document.getElementById('gridContainer');
+
+        function clearGrid() {
+            container.innerHTML = '';
+        }
+
+        function isPositiveInteger(value) {
+            return Number.isInteger(value) && value > 0;
+        }
+
+        createBtn.addEventListener('click', () => {
+            const rows = parseInt(rowsInput.value, 10);
+            const cols = parseInt(colsInput.value, 10);
+            const targetX = parseInt(txInput.value, 10); // column
+            const targetY = parseInt(tyInput.value, 10); // row
+
+            if (!isPositiveInteger(rows) || !isPositiveInteger(cols)) {
+                alert('Rows and Columns must be positive integers.');
+                return;
+            }
+            if (!isPositiveInteger(targetX) || !isPositiveInteger(targetY)) {
+                alert('TargetX and TargetY must be positive integers.');
+                return;
+            }
+
+            // Validation per requirement: TargetX between 1 and Columns, TargetY between 1 and Rows
+            if (targetX < 1 || targetX > cols || targetY < 1 || targetY > rows) {
+                alert('TargetX must be between 1 and Columns, and TargetY must be between 1 and Rows.');
+                return;
+            }
+
+            // Remove previous elements
+            clearGrid();
+
+            // Create table
+            const table = document.createElement('table');
+            for (let r = 1; r <= rows; r++) {
+                const tr = document.createElement('tr');
+                for (let c = 1; c <= cols; c++) {
+                    const td = document.createElement('td');
+                    td.textContent = 'click';
+                    // Attach click handler
+                    td.addEventListener('click', () => {
+                        // targetY is row, targetX is column
+                        if (r === targetY && c === targetX) {
+                            alert('yes');
+                        } else {
+                            alert('no');
+                        }
+                    });
+                    tr.appendChild(td);
+                }
+                table.appendChild(tr);
+            }
+            container.appendChild(table);
+        });
+
+        resetBtn.addEventListener('click', () => {
+            rowsInput.value = '';
+            colsInput.value = '';
+            txInput.value = '';
+            tyInput.value = '';
+            clearGrid();
+        });
+    </script>
+</body>
+</html>
