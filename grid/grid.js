@@ -8,7 +8,7 @@ function createInput(inputName){
     return newInput;   
 }
 
-function valifateInput(numRows, numCols, targetX, targetY){
+function validateInput(numRows, numCols, targetX, targetY){
     if (targetX < 1) return false;
     if (targetX < numCols) return false;
     if (targetY < 1) return false;
@@ -36,7 +36,7 @@ function start() {
         txNumber = Number(tx.val());
         tyNumber = Number(ty.val());
         
-        if (!validInput(RNumber, CNumber, txNumber, tyNumber)) {
+        if (!validateInput(RNumber, CNumber, txNumber, tyNumber)) {
             alert("Error validating Input");
         }
         else {
@@ -57,11 +57,14 @@ function start() {
             }
             $("body").append(myTable);
         }
-
-    });
-
-    btnReset.on("click", function(){
+        let btnReset = $("<button>");
+        btnReset.html("Clear Grid");
+        $("body").append(btnReset);
+    
+        btnReset.on("click", function(){
         $("body").html("");
         start();
+    });
+
     });
 }
