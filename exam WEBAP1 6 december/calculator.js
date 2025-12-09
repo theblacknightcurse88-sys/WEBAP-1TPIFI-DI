@@ -2,17 +2,27 @@ $(start);
 
 function start() {
 
-    let input = "";
+    let savedValue = null;
+    let savedOperator = null;
+
+    const partialDiv = $("<div>");
+    $("body").append(partialDiv);
+
     const valueInput = $("<input>");
     valueInput.attr("placeholder", "0");
     $("body").append(valueInput);
     $("body").append("<br>");
+
+
 
     let btnCLEAR = $("<button>");
     btnCLEAR.html("CLEAR");
     btnCLEAR.on("click", function () {
         if(valueInput.val() != "") {
             valueInput.val("");
+            savedValue = null;
+            savedOperator = null;
+            partialDiv.html("");
         }
     });
     $("body").append(btnCLEAR);
@@ -21,7 +31,10 @@ function start() {
     let btnPLUS = $("<button>");
     btnPLUS.html("PLUS");
     btnPLUS.on("click", function () {
-
+        savedValue = Number(valueInput.val());
+        savedOperator = "+";
+        partialDiv.html(savedValue + " +");
+        valueInput.val("");
     })
     $("body").append(btnPLUS);
 
@@ -29,7 +42,10 @@ function start() {
     let btnMINUS = $("<button>");
     btnMINUS.html("MINUS");
     btnMINUS.on("click", function () {
-        
+        savedValue = Number(valueInput.val());
+        savedOperator = "-";
+        partialDiv.html(savedValue + " -");
+        valueInput.val("");
     })
     $("body").append(btnMINUS);
 
@@ -37,79 +53,38 @@ function start() {
     let btnEQUAL = $("<button>");
     btnEQUAL.html("EQUAL");
     btnEQUAL.on("click", function () {
+        let currentValue = Number(valueInput.val());
+        if (savedOperator === "+") valueInput.val(savedValue + currentValue);
+        if (savedOperator === "-") valueInput.val(savedValue - currentValue);
 
-    })
+        savedValue = null;
+        savedOperator = null;
+        partialDiv.html("");
+    });
     $("body").append(btnEQUAL);
     $("body").append("<br>");
     
 
 
-    let btn7 = $("<button>");
-    btn7.html("__7__");
-    btn7.on("click", function () {
-        valueInput.val(input += "7");
-    })
-    $("body").append(btn7);
-    
-    let btn8 = $("<button>");
-    btn8.html("__8__");
-    btn8.on("click", function () {
-        valueInput.val(input += "8");
-    })
-    $("body").append(btn8);
+    function makeDigitButton(digit) {
+        let btn = $("<button>");
+        btn.html(digit);
+        btn.on("click", function() {
+            valueInput.val(valueInput.val() + digit);
+        });
+        $("body").append(btn);
+    }
 
-    let btn9 = $("<button>");
-    btn9.html("__9__");
-    btn9.on("click", function () {
-        valueInput.val(input += "9");
-    })
-    $("body").append(btn9);
+    makeDigitButton("7");
+    makeDigitButton("8");
+    makeDigitButton("9");
     $("body").append("<br>");
-
-
-
-    let btn4 = $("<button>");
-    btn4.html("__4__");
-    btn4.on("click", function () {
-        valueInput.val(input += "4");
-    })
-    $("body").append(btn4);
-
-    let btn5 = $("<button>");
-    btn5.html("__5__");
-    btn5.on("click", function () {
-        valueInput.val(input += "5");
-    })
-    $("body").append(btn5);
-
-    let btn6 = $("<button>");
-    btn6.html("__6__");
-    btn6.on("click", function () {
-        valueInput.val(input += "6");
-    })
-    $("body").append(btn6);
+    makeDigitButton("4");
+    makeDigitButton("5");
+    makeDigitButton("6");
     $("body").append("<br>");
-
-
-
-    let btn1 = $("<button>");
-    btn1.html("__1__");
-    btn1.on("click", function () {
-        valueInput.val(input += "1");
-    })
-    $("body").append(btn1);
-
-    let btn2 = $("<button>");
-    btn2.html("__2__");
-    btn2.on("click", function () {
-        valueInput.val(input += "2");
-    })
-    $("body").append(btn2);
-
-    let btn3 = $("<button>");
-    btn3.html("__3__");
-    btn3.on("click", function () {
-        valueInput.val(input += "3");
-    })
-    $("body").append(btn3);
+    makeDigitButton("1");
+    makeDigitButton("2");
+    makeDigitButton("3");
+    $("body").append("<br>");
 }
